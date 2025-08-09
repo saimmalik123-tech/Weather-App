@@ -8,6 +8,7 @@ function getIconUrl(condition) {
         thunderstorm: 'https://img.icons8.com/ios-filled/100/000000/storm.png',
         snow: 'https://img.icons8.com/ios-filled/100/000000/snow.png',
         fog: 'https://img.icons8.com/ios-filled/100/000000/fog-day.png',
+        haze: 'https://img.icons8.com/?size=100&id=9270&format=png&color=000000',
     };
 
     condition = condition.toLowerCase();
@@ -18,7 +19,7 @@ function getIconUrl(condition) {
     if (condition.includes('rain')) return iconMap.rain;
     if (condition.includes('thunderstorm')) return iconMap.thunderstorm;
     if (condition.includes('snow')) return iconMap.snow;
-    if (condition.includes('fog') || condition.includes('mist')) return iconMap.fog;
+    if (condition.includes('fog') || condition.includes('mist') || condition.includes('haze')) return iconMap.haze;
 
     return 'https://img.icons8.com/ios-filled/100/000000/sun--v1.png';
 }
@@ -31,8 +32,7 @@ async function getWeather(city) {
         const res = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
         if (!res.ok) throw new Error('Network response was not ok');
         const response = await res.json();
-        console.log(response);
-        
+
 
         if (!response.current_condition || !response.current_condition.length) {
             alert('No weather data found for "' + city + '". Please check the city name.');
@@ -45,6 +45,8 @@ async function getWeather(city) {
         const temperature = response.current_condition[0].temp_C;
         const humidity = response.current_condition[0].humidity;
         const currentCondition = response.current_condition[0].weatherDesc[0].value;
+        console.log(currentCondition);
+
 
         document.getElementById('cityName').textContent = city;
         document.getElementById('temp').textContent = `${temperature}°C`;
