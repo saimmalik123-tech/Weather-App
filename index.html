@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="app-container">
+        <button id="openModalBtn" class="open-btn">Search Weather</button>
+
+        <div class="modal-overlay" id="modal" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <span class="close-btn" id="closeModalBtn" role="button" aria-label="Close">&times;</span>
+                <h2 id="modalTitle">Enter City Name</h2>
+                <input type="text" id="cityInput" placeholder="e.g. Karachi" autocomplete="off" />
+                <button id="submitBtn">Get Weather</button>
+            </div>
+        </div>
+
+        <div id="weatherCard" class="weather-card" style="display:none;">
+            <div id="weatherIcon" class="weather-icon"></div>
+            <div class="weather-info">
+                <h2 id="cityName">City</h2>
+                <div class="weather-details">
+                    <div class="detail">
+                        <div class="label">Temperature</div>
+                        <div class="value" id="temp">--°C</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Feels Like</div>
+                        <div class="value" id="feelsLike">--°C</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Humidity</div>
+                        <div class="value" id="humidity">--%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Weather app by Saim Malik</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
