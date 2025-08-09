@@ -5,10 +5,16 @@ function getIconUrl(condition) {
         'partly cloudy': 'https://img.icons8.com/ios-filled/100/000000/partly-cloudy-day--v1.png',
         cloudy: 'https://img.icons8.com/ios-filled/100/000000/cloud.png',
         rain: 'https://img.icons8.com/ios-filled/100/000000/rain.png',
+        drizzle: 'https://img.icons8.com/ios-filled/100/000000/drizzle.png',
         thunderstorm: 'https://img.icons8.com/ios-filled/100/000000/storm.png',
         snow: 'https://img.icons8.com/ios-filled/100/000000/snow.png',
+        sleet: 'https://img.icons8.com/ios-filled/100/000000/sleet.png',
         fog: 'https://img.icons8.com/ios-filled/100/000000/fog-day.png',
-        haze: 'https://img.icons8.com/?size=100&id=9270&format=png&color=000000',
+        haze: 'https://img.icons8.com/ios-filled/100/000000/haze.png',
+        wind: 'https://img.icons8.com/ios-filled/100/000000/wind.png',
+        smoke: 'https://img.icons8.com/ios-filled/100/000000/smoke.png',
+        dust: 'https://img.icons8.com/ios-filled/100/000000/dust.png',
+        tornado: 'https://img.icons8.com/ios-filled/100/000000/tornado.png',
     };
 
     condition = condition.toLowerCase();
@@ -16,12 +22,20 @@ function getIconUrl(condition) {
     if (condition.includes('clear') || condition.includes('sunny')) return iconMap.sunny;
     if (condition.includes('partly cloudy')) return iconMap['partly cloudy'];
     if (condition.includes('cloudy')) return iconMap.cloudy;
+    if (condition.includes('drizzle')) return iconMap.drizzle;
     if (condition.includes('rain')) return iconMap.rain;
     if (condition.includes('thunderstorm')) return iconMap.thunderstorm;
     if (condition.includes('snow')) return iconMap.snow;
-    if (condition.includes('fog') || condition.includes('mist') || condition.includes('haze')) return iconMap.haze;
+    if (condition.includes('sleet')) return iconMap.sleet;
+    if (condition.includes('fog')) return iconMap.fog;
+    if (condition.includes('haze')) return iconMap.haze;
+    if (condition.includes('mist')) return iconMap.fog;
+    if (condition.includes('wind')) return iconMap.wind;
+    if (condition.includes('smoke')) return iconMap.smoke;
+    if (condition.includes('dust')) return iconMap.dust;
+    if (condition.includes('tornado')) return iconMap.tornado;
 
-    return 'https://img.icons8.com/ios-filled/100/000000/sun--v1.png';
+    return iconMap.clear;
 }
 
 async function getWeather(city) {
