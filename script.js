@@ -67,7 +67,6 @@ async function getWeather(city) {
         if (!res.ok) throw new Error('Network response was not ok');
         const response = await res.json();
 
-
         if (!response.current_condition || !response.current_condition.length) {
             alert('No weather data found for "' + city + '". Please check the city name.');
             submitBtn.disabled = false;
@@ -79,8 +78,6 @@ async function getWeather(city) {
         const temperature = response.current_condition[0].temp_C;
         const humidity = response.current_condition[0].humidity;
         const currentCondition = response.current_condition[0].weatherDesc[0].value;
-        console.log(currentCondition);
-
 
         document.getElementById('cityName').textContent = city;
         document.getElementById('temp').textContent = `${temperature}°C`;
@@ -95,7 +92,6 @@ async function getWeather(city) {
         closeModal();
     } catch (error) {
         alert('Failed to get weather for "' + city + '". Please try again.');
-        console.error(error);
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Get Weather';
@@ -141,4 +137,5 @@ cityInput.addEventListener('keyup', (e) => {
     }
 });
 
+// Default Weather Call
 getWeather('Pakistan,Hyderabad');
