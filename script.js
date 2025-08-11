@@ -55,20 +55,19 @@ function getIconUrl(condition) {
     return iconMap.clear;
 }
 
-
-async function getWeather(city, country) {
+async function getWeather(city, country = '') {
     try {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Loading...';
 
-        const res = await fetch(`https://wttr.in/${encodeURIComponent(city), (country)}?format=j1`);
+        const location = country ? `${encodeURIComponent(city)},${encodeURIComponent(country)}` : encodeURIComponent(city);
+        const res = await fetch(`https://wttr.in/${location}?format=j1`);
+
         if (!res.ok) throw new Error('Network response was not ok');
         const response = await res.json();
 
         if (!response.current_condition || !response.current_condition.length) {
             alert('No weather data found for "' + city + '". Please check the city name.');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Get Weather';
             return;
         }
 
@@ -90,6 +89,7 @@ async function getWeather(city, country) {
         closeModal();
     } catch (error) {
         alert('Failed to get weather for "' + city + '". Please try again.');
+        console.error(error);
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Get Weather';
@@ -137,17 +137,22 @@ cityInput.addEventListener('keyup', (e) => {
 
 async function getLocation() {
     try {
-        const res = await fetch('http://ip-api.com/json/');
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const res = await fetch('https://ipinfo.io/json?token='); 
+        if (!res.ok) throw new Error('Failed to fetch location');
 
         const data = await res.json();
-        const { city, country } = data;
+        const city = data.city || '';
+        const country = data.country || '';
 
-        getWeather(city, country);
+        if (city) {
+            getWeather(city, country);
+        } else {
+            console.warn('City not found in location data.');
+        }
     } catch (error) {
-        alert('Server Error');
-        console.error('Failed to get location:', error);
+        console.error('Error fetching location:', error);
     }
 }
 
 getLocation();
+
