@@ -137,5 +137,14 @@ cityInput.addEventListener('keyup', (e) => {
     }
 });
 
-// Default Weather Call
-getWeather('Pakistan,Hyderabad');
+async function getLocation() {
+  const res = await fetch('https://ipapi.co/json/');
+  const data = await res.json();
+  const lat = data.latitude;
+  const long = data.longitude;
+  getWeather(lat,long);
+  console.log('Latitude:', lat);
+  console.log('Longitude:', long);
+}
+
+getLocation();
