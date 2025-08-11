@@ -18,7 +18,6 @@ function getIconUrl(condition) {
         mist: 'https://img.icons8.com/?size=100&id=LktBoDfNx5kT&format=png&color=000000',
         wind: 'https://img.icons8.com/ios-filled/100/000000/wind.png',
         smoke: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Smoke_icon_iOS.png?20181224005744',
-        dust: 'https://img.icons8.com/?size=100&id=19565&format=png&color=000000',
         sandstorm: 'https://img.icons8.com/?size=100&id=hAXjK121nDyx&format=png&color=000000',
         tornado: 'https://img.icons8.com/?size=100&id=9309&format=png&color=000000',
         'volcanic ash': 'https://img.icons8.com/?size=100&id=uRd97HrQOYxy&format=png&color=000000',
@@ -46,7 +45,6 @@ function getIconUrl(condition) {
     if (condition.includes('mist')) return iconMap.mist;
     if (condition.includes('wind')) return iconMap.wind;
     if (condition.includes('smoke')) return iconMap.smoke;
-    if (condition.includes('dust')) return iconMap.dust;
     if (condition.includes('sandstorm')) return iconMap.sandstorm;
     if (condition.includes('tornado')) return iconMap.tornado;
     if (condition.includes('volcanic ash')) return iconMap['volcanic ash'];
@@ -58,12 +56,12 @@ function getIconUrl(condition) {
 }
 
 
-async function getWeather(city) {
+async function getWeather(city, country) {
     try {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Loading...';
 
-        const res = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
+        const res = await fetch(`https://wttr.in/${encodeURIComponent(city), (country)}?format=j1`);
         if (!res.ok) throw new Error('Network response was not ok');
         const response = await res.json();
 
@@ -138,13 +136,18 @@ cityInput.addEventListener('keyup', (e) => {
 });
 
 async function getLocation() {
-  const res = await fetch('https://ipapi.co/json/');
-  const data = await res.json();
-  const lat = data.latitude;
-  const long = data.longitude;
-  getWeather(lat,long);
-  console.log('Latitude:', lat);
-  console.log('Longitude:', long);
+    try {
+        const res = await fetch('http://ip-api.com/json/');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        const { city, country } = data;
+
+        getWeather(city, country);
+    } catch (error) {
+        alert('Server Error');
+        console.error('Failed to get location:', error);
+    }
 }
 
 getLocation();
