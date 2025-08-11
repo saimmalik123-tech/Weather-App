@@ -141,4 +141,4 @@ cityInput.addEventListener('keyup', (e) => {
     }
 });
 
-getWeather('pakistan,hyderabad');
+getWeather('Pakistan,Hyderabad');
